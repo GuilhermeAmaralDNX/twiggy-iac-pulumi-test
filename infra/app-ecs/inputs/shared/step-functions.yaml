@@ -1,0 +1,70 @@
+[]
+# - name: dev-dgps-log-converter-error
+#   definition: |
+#     {
+#       "Comment": "A simple AWS Step Functions state machine that processes SQS messages.",
+#       "StartAt": "NextState",
+#       "States": {
+#         "NextState": {
+#           "Type": "Pass",
+#           "Parameters": {
+#             "input.$": "States.StringToJson($.[0].body)"
+#           },
+#           "Next": "DynamoDB GetItem"
+#         },
+#         "DynamoDB GetItem": {
+#           "Type": "Task",
+#           "Resource": "arn:aws:states:::dynamodb:getItem",
+#           "Parameters": {
+#             "TableName": "dev-dgps-connector-post-flight",
+#             "Key": {
+#               "key": {
+#                 "S.$": "$.input.key"
+#               }
+#             }
+#           },
+#           "Next": "Lambda Invoke"
+#         },
+#         "Lambda Invoke": {
+#           "Type": "Task",
+#           "Resource": "arn:aws:states:::lambda:invoke",
+#           "OutputPath": "$.Payload",
+#           "Parameters": {
+#             "FunctionName": "arn:aws:lambda:us-east-2:1111111111111:function:dev-graphql-api-connector:$LATEST",
+#             "Payload": {
+#               "query": "mutation UpdateFile($input: UpdateFileInput!) { updateFile(input: $input) {id} }",
+#               "variables": {
+#                 "input": {
+#                   "id.$": "$.Item.metadata.M.applicationId.S",
+#                   "status": "Invalid"
+#                 }
+#               }
+#             }
+#           },
+#           "Retry": [
+#             {
+#               "ErrorEquals": [
+#                 "Lambda.ServiceException",
+#                 "Lambda.AWSLambdaException",
+#                 "Lambda.SdkClientException",
+#                 "Lambda.TooManyRequestsException"
+#               ],
+#               "IntervalSeconds": 1,
+#               "MaxAttempts": 3,
+#               "BackoffRate": 2
+#             }
+#           ],
+#           "End": true
+#         }
+#       }
+#     }
+#   tags:
+#     Environment: dev
+#     Project: dgps
+#   managedPolicies:
+#     - "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+#     - "arn:aws:iam::aws:policy/AWSStepFunctionsFullAccess"
+#     - "arn:aws:iam::aws:policy/AWSLambda_FullAccess"
+#     - "arn:aws:iam::aws:policy/AmazonSNSFullAccess"
+#     - "arn:aws:iam::aws:policy/AmazonSQSFullAccess"
+#   customPolicies: []

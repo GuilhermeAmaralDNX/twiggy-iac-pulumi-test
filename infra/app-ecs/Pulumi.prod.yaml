@@ -1,0 +1,65 @@
+config:
+  app-ecs:configuration:
+    pulumiOrg: twiggy-org
+    region: "us-east-1"
+    account: "prod"
+    accountNumber: "000000000000"
+    ecsName: "dev-apps"
+    vpnCidr: "10.47.0.0/16"
+    useDefaultCertificate: true
+    certificate: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    additionalCertificate: []
+    isFargate: false
+    isFargateSpot: false
+    isFargateOnly: false
+    throughputMode: "bursting"
+    provisionedThroughputInMibps: "0"
+    albExternal: true
+    albInternal: false
+    instanceTypes:
+      - "t3.small"
+      - "t3a.small"
+    minSize: "1"
+    maxSize: "2"
+    onDemandBaseCapacity: "0"
+    onDemandPercentageAboveBaseCapacity: "0"
+    asgTargetCapacity: "70"
+    volumeSize: "30"
+    ecsSetting:
+      - name: "containerInsights"
+        value: "enabled"
+    scheduler:
+      enabled: "true"
+      scheduleCronStart: "0 11 * * *"
+      scheduleCronStop: "0 20 * * *"
+      asgMin: "1"
+      asgMax: "3"
+    retentionInDays: "30"
+    exportToS3: "false"
+    grafana:
+      enabled: true
+      name: "grafana"
+      alb: "external"
+      image: "grafana/grafana:10.0.5-ubuntu"
+      cpu: "512"
+      memory: "512"
+      paths:
+        - "/*"
+      hostnames:
+        - "grafana.prod.twiggy.ai"
+    appsWithALB: []
+    appsWithouthALB: []
+    networkNLB: []
+    ssmParameter: []
+    secretManager: []
+    efsAccessPoints: []
+    instances: []
+    sqs: []
+    sns: []
+    s3: []
+    rdsAurora: []
+    rdsInstance: []
+    redis: []
+    orgName: twiggy
+  aws:region: "us-east-1"
+  pulumi:template: "aws-javascript"

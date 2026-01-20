@@ -1,0 +1,36 @@
+
+databases: []
+  # - name: "gd3hswf"
+  #   description: "Managed by Pulumi"
+  #   bucketsArn:
+  #     - arn:aws:s3:::dms-xxxxx-dev
+  #     - arn:aws:s3:::dms-xxxxx-dev/*
+  #   crawlers:
+  #     - name: "LegacyDataMigration-S3"
+  #       dataSourceType: s3
+  #       s3Targets:
+  #         - "s3://dms-xxxxx-dev/voa"
+  # - name: "xxxxx-dev"
+  #   description: "Managed by Pulumi"
+  #   bucketsArn:
+  #     - arn:aws:s3:::dgps-log-dev-dev/
+  #     - arn:aws:s3:::dgps-log-dev-dev/*
+  #   crawlers:
+  #     - name: "GlueCrawler-424ZMNVEOM2O"
+  #       dataSourceType: s3
+  #       s3Targets:
+  #         -  s3://dgps-log-dev-dev/wkts/pre-transformed/johndeere/
+  #         -  s3://dgps-log-dev-dev/wkts/pre-transformed/agnav/
+  #         -  s3://dgps-log-dev-dev/wkts/pre-transformed/galindo/
+  #         -  s3://dgps-log-dev-dev/wkts/pre-transformed/travicar/
+  #         -  s3://dgps-log-dev-dev/wkts/pre-transformed/satloc/
+  #         -  s3://dgps-log-dev-dev/wkts/pre-transformed/dynanav/
+  #         -  s3://dgps-log-dev-dev/wkts/fields/
+  #         -  s3://dgps-log-dev-dev/wkts/layers/
+  # - name: "jdbc-target"
+  #   description: "Managed by Pulumi"
+  #   crawlers:
+  #     - name: "asdd"
+  #       dataSourceType: jdbc
+  #       jdbcTargets:
+  #           path: 

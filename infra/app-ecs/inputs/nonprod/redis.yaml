@@ -1,0 +1,41 @@
+[]
+# - name: mrbean
+#   automaticFailoverEnabled: false
+#   atRestEncryptionEnabled: true
+#   transitEncryptionEnabled: false
+#   applyImmediately: true
+#   multiAzEnabled: false
+#   snapshotRetentionLimit: 1
+#   snapshotWindow: 01:00-02:00
+#   autoMinorVersionUpgrade: false
+#   engine: redis
+#   engineVersion: 6.x
+#   nodeType: cache.t2.micro
+#   description: Redis for app
+#   vpnAccess: true
+#   appsAccess: true
+#   ingressRules: []
+    # - fromPort: 6379
+    #   toPort: 6379
+    #   protocol: tcp
+    #   sourceSecurityGroupId: sg-xxxxxxxxxxxx 
+# - name: bobzinho
+#   automaticFailoverEnabled: false
+#   atRestEncryptionEnabled: true
+#   transitEncryptionEnabled: false
+#   applyImmediately: true
+#   multiAzEnabled: false
+#   snapshotRetentionLimit: 1
+#   snapshotWindow: 01:00-02:00
+#   autoMinorVersionUpgrade: false
+#   engine: redis
+#   engineVersion: 6.x
+#   nodeType: cache.t2.micro
+#   description: Redis for app
+#   vpnAccess: true
+#   appsAccess: true
+#   ingressRules: []
+#     # - fromPort: 6379
+#     #   toPort: 6379
+#     #   protocol: tcp
+#     #   sourceSecurityGroupId: sg-xxxxxxxxxxxx     

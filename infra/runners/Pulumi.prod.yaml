@@ -1,0 +1,28 @@
+config:
+  aws:region: "us-east-2"
+  pulumi:template: "aws-javascript"
+  configuration:
+    orgName:
+    pulumiOrg: carlosfavacho  
+    account: "prod"
+    region: us-east-2
+    type: "bitbucket"
+    name: "prod"
+    tokenpulumi: ""
+    runnerType: github
+
+    profileInstance: "InfraDeployInstanceProfile"
+    githubconfig:
+      githubOrg: "xxxxxxxxxxxxxxx"
+      githubLabels: "aws,prod,linux"
+      githubToken: "xxxxxxxxxxxxxxxxxxxxxxxx"
+    
+    bitbucketConfig:
+      account_uuid: "xxxxxxxxxxxxxxxxxxxxxxxxxx"
+      runner_uuid: "xxxxxx"
+      oauth_client_id: "xxxxxx"
+      oauth_client_secret: "xxxx"
+
+    instanceTypes:
+      - instanceType: "t3.medium"
+      - instanceType: "t3a.medium"

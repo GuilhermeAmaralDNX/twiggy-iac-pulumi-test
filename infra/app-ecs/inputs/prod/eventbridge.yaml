@@ -1,0 +1,63 @@
+[]
+# - name: GetEventsForExecutionRule
+#   eventPattern:
+#     {
+#       "source": [
+#         "aws.states"
+#       ],
+#       "detail-type": [
+#         "Step Functions Execution Status Change"
+#       ],
+#       "detail": {
+#         "status": [
+#           "FAILED",
+#           "SUCCEEDED",
+#           "TIMED_OUT",
+#           "ABORTED"
+#         ]
+#       }
+#     }
+#   targetArn: "arn:aws:states:us-east-2:::"
+#   inputTransformer:
+#     inputPaths:
+#       {
+#         "$.detail"
+#       }
+#     inputTemplate: []
+
+# - name: SendPFMonthlyReport
+#   scheduleExpression: 0 0 1 * ? *
+#   targetArn: arn:aws:lambda:us-east-2:000000000000:function:SendPFMonthlyReport
+#   inputTransformer:
+#     inputPaths:
+#       {
+#         "$.detail"
+#       }
+#     inputTemplate: []
+
+# - name: Schemas-events-event-bus
+#   eventPattern:
+#     {
+#       "source": [{
+#         "prefix": "aws.partner/"
+#       }, {
+#         "anything-but": {
+#           "prefix": "aws."
+#         }
+#       }]
+#     }
+#   targetArn: "arn:aws:schemas:us-east-1:::"
+#   inputTransformer:
+#     inputPaths:
+#       {
+#         "account": "$.account",
+#         "detail": "$.detail",
+#         "detail-type": "$.detail-type",
+#         "id": "$.id",
+#         "region": "$.region",
+#         "resources": "$.resources",
+#         "source": "$.source",
+#         "time": "$.time",
+#         "version": "$.version"
+#       }
+#     inputTemplate: {"account": <account>,"detail": <detail>,"detail-type": <detail-type>,"id": <id>,"ingestion-time": <aws.events.event.ingestion-time>,"region": <region>,"resources": <resources>,"rule-arn": <aws.events.rule-arn>,"source": <source>,"time": <time>,"version": <version>}

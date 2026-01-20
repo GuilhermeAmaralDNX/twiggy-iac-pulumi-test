@@ -1,0 +1,47 @@
+[]
+# - name: docapp
+#   applyImmediately: true
+#   availabilityZones: ['us-east-2a']
+#   backupRetentionPeriod: 3
+#   clusterIdentifier: docapp
+#   engine: docdb
+#   engineVersion: 4.0.0
+#   masterUsername: apps
+#   skipFinalSnapshot: true
+#   vpnAccess: true
+#   appsAccess: true
+#   instances:
+#     - name: docapp1
+#       instanceClass: db.t3.medium
+#       applyImmediately: true
+#       autoMinorVersionUpgrade: true
+#       availabilityZone: us-east-2a
+#       engine: docdb
+#   ingressRules: []
+    # - fromPort: 27017
+    #   toPort: 27017
+    #   protocol: tcp
+    #   sourceSecurityGroupId: sg-xxxxxxxxxxx
+# - name: docapp2
+#   applyImmediately: true
+#   availabilityZones: ['us-east-2a']
+#   backupRetentionPeriod: 3
+#   clusterIdentifier: docapp
+#   engine: docdb
+#   engineVersion: 4.0.0
+#   masterUsername: apps
+#   skipFinalSnapshot: true
+#   vpnAccess: true
+#   appsAccess: true
+#   instances:
+#     - name: docapp1
+#       instanceClass: db.t3.medium
+#       applyImmediately: true
+#       autoMinorVersionUpgrade: true
+#       availabilityZone: us-east-2a
+#       engine: docdb
+#   ingressRules: []
+#     # - fromPort: 27017
+#     #   toPort: 27017
+#     #   protocol: tcp
+#     #   sourceSecurityGroupId: sg-xxxxxxxxxxx    

@@ -1,0 +1,46 @@
+customKMSPermission: []
+  # - effect: Allow
+  #   actions: 
+  #     - "kms:Encrypt*"
+  #     - "kms:Decrypt*"
+  #     - "kms:ReEncrypt*"
+  #     - "kms:GenerateDataKey*"
+  #     - "kms:Describe*"
+  #   principals:
+  #     - type: Service
+  #       identifiers: 
+  #         - sns.amazonaws.com
+  #         - sqs.amazonaws.com
+  #   resources:
+  #     - "*"
+  #   conditions:
+  #     - test: "ArnEquals"
+  #       variable: "aws:SourceArn"
+  #       values: 
+  #         - "arn:aws:sns:us-east-2:1111111111:dev-dgps-connector-post-flight-processing"
+  #         - "arn:aws:sns:us-east-2:1111111111:dev-dgps-log-converter-processing"
+  #         - "arn:aws:sns:us-east-2:1111111111:dev-dgps-log-conversor-conversion-error"
+  #         - "arn:aws:sns:us-east-2:1111111111:dev-agnav-connector-post-flight-processing"
+  #         - "arn:aws:sns:us-east-2:1111111111:dev-agnav-connector-post-flight-unlock"
+  #         - "arn:aws:sns:us-east-2:000000000000:dev-trimble-connector-post-flight-processing"
+  #         - "arn:aws:sns:us-east-2:1111111111:dev-verion-connector-post-flight-processing"
+  #         - "arn:aws:sns:us-east-2:1111111111:dev-satloc-connector-post-flight-processing"
+  #         - "arn:aws:sns:us-east-2:1111111111:dev-satloc-connector-post-flight-unlock"
+  #         - "arn:aws:sns:us-east-2:1111111111:dev-travicar-connector-post-flight-processing"
+  #         - "arn:aws:sns:us-east-2:1111111111:dev-travicar-connector-post-flight-upload"
+  #         - "arn:aws:sns:us-east-2:1111111111:dev-agpilotx-connector-post-flight-processing"
+  #         - "arn:aws:sqs:us-east-2:1111111111:dgps-log-conversor-dev.fifo"
+listSqs: []
+  # - name: dgps-log-conversor-dev.fifo
+  #   fifoQueue: true
+  #   tags: {}
+  #   policy:
+  #     Version: "2012-10-17"
+  #     Statement:
+  #       - Principal: "*"
+  #         Sid: "__owner_statement"
+  #         Effect: "Allow"
+  #         Action:
+  #           - "SQS:*"
+  #         Resource: 
+  #           - "arn:aws:sqs:us-east-2:1111111111:dgps-log-conversor-dev.fifo"

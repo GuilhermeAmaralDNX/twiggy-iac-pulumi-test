@@ -1,0 +1,9 @@
+{
+    "name": "runners",
+    "main": "index.js",
+    "dependencies": {
+        "@pulumi/aws": "7.5.0",
+        "@pulumi/pulumi": "3.191.0",
+        "template-file": "6.0.1"
+    }
+}

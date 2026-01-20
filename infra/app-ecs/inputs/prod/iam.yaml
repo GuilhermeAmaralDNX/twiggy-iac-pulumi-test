@@ -1,0 +1,27 @@
+[]
+# - name: ecs-permissions
+#   policies:
+#     - policy: arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+#       name: EcsRole
+#   permissions:
+#    - effect: Allow
+#      actions: 
+#        - "logs:DescribeLogGroups"
+#        - "logs:DescribeLogStream"
+#        - "logs:CreateLogStream"
+#        - "logs:PutLogEvents"
+#        - "logs:CreateLogGroup"
+#      resources:
+#        - "*"
+#    - effect: Allow
+#      actions: 
+#        - "secretsmanager:GetSecretValue"
+#        - "secretsmanager:DescribeSecret"
+#      resources:
+#        - arn:aws:secretsmanager:*:*:secret:ecs-app-*
+#   assume:
+#    - actions:
+#        - sts:AssumeRole
+#      principal:
+#        service: "ecs-tasks.amazonaws.com"
+#      effect: 'Allow'

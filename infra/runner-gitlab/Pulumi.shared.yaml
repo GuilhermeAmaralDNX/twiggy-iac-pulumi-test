@@ -1,0 +1,91 @@
+config:
+  aws:region: us-east-2
+  pulumi:template: aws-javascript
+  runners:configuration:
+    orgName:
+    pulumiOrg: carlosfavacho
+    name: mrbean
+    instanceType: t3.micro
+    account: shared
+    cache:
+      lifecycleClear: true
+      lifecyclePrefix: runner/
+      expirationDays: 1
+      bucketPrefix: mrbean
+    gitlabRunnerConfig:
+      gitlab_runner_version: 15.6.1               
+      docker_machine_version: 0.16.2              
+      docker_machine_download_url: ""          
+      # runners_config:  template runnerConfigValues                       
+      runners_executor: docker+machine                     
+      pre_install: ''                           
+      post_install: ''                          
+      runners_gitlab_url: 'https://gitlab.com'                   
+      runners_token: '__REPLACED_BY_USER_DATA__'                         
+      secure_parameter_store_runner_token_key: mrbean-runner-token
+      secure_parameter_store_region: us-east-1      
+      gitlab_runner_registration_token: "xxxxxxxxxxxxxxxxxx"      
+      giltab_runner_description: "runner for infra and app deployments"              
+      gitlab_runner_tag_list: "mrbean-runner, docker"                
+      gitlab_runner_locked_to_project: true     
+      gitlab_runner_run_untagged: false         
+      gitlab_runner_maximum_timeout: 3600          
+      gitlab_runner_access_level: "not_protected"            
+      # runners_security_group_id:               
+    userDataConfig:
+      eip: ''
+      logging: ''
+      # gitlab_runner: ''
+      user_data_trace_log: false
+    runnerConfig:
+      aws_region: us-east-1
+      gitlab_url: https://gitlab.com
+      runners_vpc_id: ""
+      runners_subnet_id: 
+      runners_aws_zone: 'c'
+      runners_instance_type: m5.large
+      runners_spot_price_bid: 0.09
+      runners_ami: xxxxxxxxxxxxxxxxxx
+      runners_security_group_name: xxxxxxxxxxxxxxxxxx
+      runners_monitoring: false
+      runners_ebs_optimized: true
+      runners_instance_profile: mrbean-instance-profile
+      runners_additional_volumes: []
+      docker_machine_options: []
+      runners_name: shared-runner
+      runners_tags: Name,shared-docker-machine,Environment,shared-runner
+      runners_token: '__REPLACED_BY_USER_DATA__'
+      runners_executor: docker+machine                
+      runners_limit: 0                   
+      runners_concurrent: 10             
+      runners_image: "19.03.13"
+      runners_privileged: true              
+      runners_shm_size:  0              
+      runners_pull_policy: always             
+      runners_idle_count: 0                
+      runners_idle_time: 600               
+      runners_max_builds: 0         
+      runners_off_peak_timezone: America/Sao_Paulo    
+      runners_off_peak_idle_count: 0     
+      runners_off_peak_idle_time: 60     
+      runners_off_peak_periods_string:  "OffPeakPeriods = [\"* * 0-9,17-23 * * mon-fri *\", \"* * * * * sat,sun *\"]"
+      runners_root_size: 30            
+      runners_iam_instance_profile_name: mrbean-instance-profile
+      runners_use_private_address_only: true
+      runners_use_private_address: false     
+      runners_request_spot_instance: false
+      runners_environment_vars: []      
+      runners_pre_build_script: ""       
+      runners_post_build_script: ""      
+      runners_pre_clone_script: ""     
+      runners_request_concurrency: 1
+      runners_output_limit: 4096            
+      runners_volumes_tmpfs: []       
+      runners_services_volumes_tmpfs: []
+      bucket_name: mrbean-gitlab-runner-cache                     
+      shared_cache: false
+      
+
+
+
+

@@ -1,0 +1,19 @@
+config:
+  aws:region: "us-east-1"
+  identity:configuration:
+    orgName: twiggy
+    pulumiOrg: twiggy-org
+    region: us-east-1
+    account: nonprod
+    accountNumber: 000000000000
+    roleMaxSessionDuration: 43200
+    enableRoleJobs: true
+    enableCiDeployRole: true
+    enableCiDeployAccess: true
+    enableIamUser: true
+    enableAdminCI: false
+    enableInstanceProfile: true
+    trustAccountIds: ["520827482915"]
+    trustArns: []
+    samlProviderArn: "arn:aws:iam::853246608662:saml-provider/bobinho-sso"
+  pulumi:template: "aws-javascript"

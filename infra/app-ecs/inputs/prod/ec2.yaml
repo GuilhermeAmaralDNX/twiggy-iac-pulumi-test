@@ -1,0 +1,60 @@
+# - name: signoz
+#   ami: ami-035efd31ab8835d8a
+#   subnetType: private
+#   vpnAccess: false
+#   appsAccess: true
+#   ingressRules: 
+#     - fromPort: 8080
+#       toPort: 8080
+#       protocol: "tcp"
+#       sourceSecurityGroupId: sg-015f3154cff600b75 
+#   egressRules: 
+#     - fromPort: 0
+#       toPort: 0
+#       protocol: "-1"
+#       cidrBlocks: ["0.0.0.0/0"]      
+#   internetAccess: true
+#   route53: []
+#   instanceType: t3.xlarge
+#   managedPolicies:
+#   - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+#   #- arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+#   customPermissions: []
+#   userDataBase64: IyEvYmluL2Jhc2gKCnN1ZG8gYXB0LWdldCB1cGRhdGUgLXkKc3VkbyBhcHQtZ2V0IGluc3RhbGwgLXkgZ2l0IGNhLWNlcnRpZmljYXRlcyBjdXJsCnN1ZG8gaW5zdGFsbCAtbSAwNzU1IC1kIC9ldGMvYXB0L2tleXJpbmdzCnN1ZG8gY3VybCAtZnNTTCBodHRwczovL2Rvd25sb2FkLmRvY2tlci5jb20vbGludXgvdWJ1bnR1L2dwZyAtbyAvZXRjL2FwdC9rZXlyaW5ncy9kb2NrZXIuYXNjCnN1ZG8gY2htb2QgYStyIC9ldGMvYXB0L2tleXJpbmdzL2RvY2tlci5hc2MKCmVjaG8gXAogICJkZWIgW2FyY2g9JChkcGtnIC0tcHJpbnQtYXJjaGl0ZWN0dXJlKSBzaWduZWQtYnk9L2V0Yy9hcHQva2V5cmluZ3MvZG9ja2VyLmFzY10gaHR0cHM6Ly9kb3dubG9hZC5kb2NrZXIuY29tL2xpbnV4L3VidW50dSBcCiAgJCguIC9ldGMvb3MtcmVsZWFzZSAmJiBlY2hvICIke1VCVU5UVV9DT0RFTkFNRTotJFZFUlNJT05fQ09ERU5BTUV9Iikgc3RhYmxlIiB8IFwKICBzdWRvIHRlZSAvZXRjL2FwdC9zb3VyY2VzLmxpc3QuZC9kb2NrZXIubGlzdCA+IC9kZXYvbnVsbApzdWRvIGFwdC1nZXQgdXBkYXRlIC15CgpzdWRvIGFwdC1nZXQgaW5zdGFsbCAteSBkb2NrZXItY2UgZG9ja2VyLWNlLWNsaSBjb250YWluZXJkLmlvIGRvY2tlci1idWlsZHgtcGx1Z2luIGRvY2tlci1jb21wb3NlLXBsdWdpbgoKCmdpdCBjbG9uZSAtYiBtYWluIGh0dHBzOi8vZ2l0aHViLmNvbS9TaWdOb3ovc2lnbm96LmdpdCAmJiBjZCBzaWdub3ovZGVwbG95LwpjZCBkb2NrZXIKZG9ja2VyIGNvbXBvc2UgdXAgLWQgLS1yZW1vdmUtb3JwaGFucwo= 
+#   backup: "true"      
+#   tags:
+#     Name: dev-ovpn-ec2
+#     OS: linux
+#   volumeSize: "100"
+#   volumeType: gp3
+
+
+- name: observability
+  ami: ami-035efd31ab8835d8a
+  subnetType: private
+  vpnAccess: false
+  appsAccess: true
+  ingressRules: 
+    - fromPort: 8080
+      toPort: 8080
+      protocol: "tcp"
+      sourceSecurityGroupId: sg-015f3154cff600b75 
+  egressRules: 
+    - fromPort: 0
+      toPort: 0
+      protocol: "-1"
+      cidrBlocks: ["0.0.0.0/0"]      
+  internetAccess: true
+  route53: []
+  instanceType: t3.xlarge
+  managedPolicies:
+  - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+  #- arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+  customPermissions: []
+  userDataBase64: IyEvYmluL2Jhc2gKCnN1ZG8gYXB0LWdldCB1cGRhdGUgLXkKc3VkbyBhcHQtZ2V0IGluc3RhbGwgLXkgZ2l0IGNhLWNlcnRpZmljYXRlcyBjdXJsCnN1ZG8gaW5zdGFsbCAtbSAwNzU1IC1kIC9ldGMvYXB0L2tleXJpbmdzCnN1ZG8gY3VybCAtZnNTTCBodHRwczovL2Rvd25sb2FkLmRvY2tlci5jb20vbGludXgvdWJ1bnR1L2dwZyAtbyAvZXRjL2FwdC9rZXlyaW5ncy9kb2NrZXIuYXNjCnN1ZG8gY2htb2QgYStyIC9ldGMvYXB0L2tleXJpbmdzL2RvY2tlci5hc2MKCmVjaG8gXAogICJkZWIgW2FyY2g9JChkcGtnIC0tcHJpbnQtYXJjaGl0ZWN0dXJlKSBzaWduZWQtYnk9L2V0Yy9hcHQva2V5cmluZ3MvZG9ja2VyLmFzY10gaHR0cHM6Ly9kb3dubG9hZC5kb2NrZXIuY29tL2xpbnV4L3VidW50dSBcCiAgJCguIC9ldGMvb3MtcmVsZWFzZSAmJiBlY2hvICIke1VCVU5UVV9DT0RFTkFNRTotJFZFUlNJT05fQ09ERU5BTUV9Iikgc3RhYmxlIiB8IFwKICBzdWRvIHRlZSAvZXRjL2FwdC9zb3VyY2VzLmxpc3QuZC9kb2NrZXIubGlzdCA+IC9kZXYvbnVsbApzdWRvIGFwdC1nZXQgdXBkYXRlIC15CgpzdWRvIGFwdC1nZXQgaW5zdGFsbCAteSBkb2NrZXItY2UgZG9ja2VyLWNlLWNsaSBjb250YWluZXJkLmlvIGRvY2tlci1idWlsZHgtcGx1Z2luIGRvY2tlci1jb21wb3NlLXBsdWdpbgo=
+  backup: "true"      
+  tags:
+    Name: observability
+    OS: linux
+  volumeSize: "100"
+  volumeType: gp3

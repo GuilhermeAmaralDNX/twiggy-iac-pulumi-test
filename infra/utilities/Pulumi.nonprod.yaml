@@ -1,0 +1,39 @@
+config:
+  utilities:configuration:
+    pulumiOrg: twiggy-org
+    account: "nonprod"
+    accountNumber: "000000000000"
+    backupSchedule: "cron(0 12 * * ? *)"
+    backupStartWindow: 60
+    backupCompletionWindow: 120
+    backupColdStorageAfter: 30
+    backupDeleteAfter: 120
+    selectionTagType: "STRINGEQUALS"
+    selectionTagKey: "Backup"
+    selectionTagValue: "true"
+    #cloudwatchLogsExportBucket: "seguralta-aws-audit-logs-us-east-2"
+    region: "us-east-1"
+    createECR: false
+    ecrREpos: []
+    useDefaultDomain: true
+    skipNetwork: false
+    #domainName: "xxxxxxxxxxxxxxxx"
+    certificates: []
+    # - name: "xxxxxxx"
+    #   validate: "true"
+    #   domains:
+    #     - "dev.xxxxxx.com.br"
+    #     - "*.dev.xxxxxx.com.br"
+    ecrTrustAccounts: []
+    pulumiToken: ""
+    awsCredentials: {}
+    repositories: []
+    scheduleStartStopResources:
+      enable: false
+      #resources: ["ASG","EC2","ECS","RDSnstance","RDSAurora","DocDB","RedShift","EKS"]
+      resources: ["ASG", "EC2", "ECS", "RDSnstance"]
+      startExpression: cron(0 11 ? * MON-FRI *)
+      stopExpression: cron(0 23 ? * MON-FRI *)
+    orgName: twiggy
+  aws:region: "us-east-1"
+  pulumi:template: "aws-javascript"

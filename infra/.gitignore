@@ -1,0 +1,137 @@
+# ========================================
+# ARQUIVOS SENSÍVEIS - NUNCA COMMITAR!
+# ========================================
+
+# Credenciais AWS
+.env*
+*.env
+.env.*
+.aws/
+credentials
+credentials.*
+
+# Outputs do Pulumi (podem conter dados sensíveis)
+*-output.json
+*output*.json
+
+# ========================================
+# PACOTES LAMBDA (reconstruir no CI/CD)
+# ========================================
+
+# Lambda function packages
+*.zip
+**/lambda-notifications*.zip
+**/chutedown.zip
+**/cloudwatch-to-s3.zip
+
+# ========================================
+# DEPENDÊNCIAS E BUILD
+# ========================================
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn
+
+# Package locks (opcional - remova se quiser versionar)
+# package-lock.json
+
+# ========================================
+# PULUMI
+# ========================================
+
+# Pulumi local state (se usar backend local)
+.pulumi/
+
+# Pulumi guard policies
+awsguard/
+
+# ========================================
+# IDE E SISTEMA
+# ========================================
+
+# VS Code
+# .vscode/  # Descomente se não quiser versionar configs do VS Code
+
+# JetBrains
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.nfs*
+
+# ========================================
+# LOGS E TEMPORÁRIOS
+# ========================================
+
+# Logs
+logs/
+*.log
+
+# Arquivos temporários
+tmp/
+temp/
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+
+# ========================================
+# ARQUIVOS DE BACKUP E CACHE
+# ========================================
+
+# Backups
+*.backup
+*.bkp
+
+# Cache
+.cache/
+*.cache
+
+# ========================================
+# TERRAFORM (caso use)
+# ========================================
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# ========================================
+# CERTIFICADOS E CHAVES
+# ========================================
+
+# Chaves privadas
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Certificados (manter apenas públicos se necessário)
+# *.crt
+# *.cer
+
+# SAML metadata (pode conter info sensível)
+# saml-metadata.xml  # Descomente se não quiser versionar

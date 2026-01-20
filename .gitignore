@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Pulumi
+.pulumi/
+
+# Environment files
+.env
+.env.*
+*.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Credentials (never commit)
+*.pem
+*.key
+credentials.json
+*-sa-key.json
+foundation.sh
+assume_arch.sh
+
+# Backup files
+*.bak
+*.backup
+
+# Claude
+.claude/

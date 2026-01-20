@@ -1,0 +1,61 @@
+instance: []
+cluster:
+  - name: "twiggy-stg-cluster"
+    snapshotId: "arn:aws:rds:us-east-1:440041991649:cluster-snapshot:twiggy-stg-snapshot-20251119-104748"
+    engine: "aurora-postgresql"
+    engineVersion: "15.12"
+    engineMode: "provisioned"
+    serverless: true
+    serverlessMinCapacity: 0.5
+    serverlessMaxCapacity: 1.0
+    allowMajorVersionUpgrade: false
+    applyImmediately: true
+    backupRetentionPeriod: 7
+    storageEncrypted: true
+    vpnAccess: true
+    appsAccess: true
+    ecsAccess: true
+    iamDatabaseAuthenticationEnabled: false
+    masterUsername: postgres
+    ignoreChanges: ["masterPassword", "kmsKeyId", "snapshotIdentifier"]
+    ingressRules: []
+    node_write:
+      name: "twiggy-stg-0"
+      instanceClass: "db.serverless"
+      engine: "aurora-postgresql"
+      engineVersion: "15.12"
+      publiclyAccessible: false
+    tags:
+      Name: "twiggy-stg-cluster"
+      Environment: "nonprod"
+      ManagedBy: "Pulumi"
+
+# TEMPORARIAMENTE COMENTADO - Problema com KMS key cross-account
+  # - name: "twiggy-v2-stg-auroracluster-snddpbtogcwz"
+  #   snapshotId: "arn:aws:rds:us-east-1:440041991649:cluster-snapshot:twiggy-v2-stg-snapshot-unencrypted-20251119"
+  #   engine: "aurora-postgresql"
+  #   engineVersion: "15.12"
+  #   engineMode: "provisioned"
+  #   serverless: true
+  #   serverlessMinCapacity: 0.5
+  #   serverlessMaxCapacity: 1.0
+  #   allowMajorVersionUpgrade: false
+  #   applyImmediately: true
+  #   backupRetentionPeriod: 7
+  #   storageEncrypted: true
+  #   vpnAccess: true
+  #   appsAccess: true
+  #   iamDatabaseAuthenticationEnabled: false
+  #   masterUsername: postgres
+  #   ignoreChanges: ["masterPassword"]
+  #   ingressRules: []
+  #   node_write:
+  #     name: "twiggy-v2-stg-aurorainstance"
+  #     instanceClass: "db.serverless"
+  #     engine: "aurora-postgresql"
+  #     engineVersion: "15.12"
+  #     publiclyAccessible: false
+  #   tags:
+  #     Name: "twiggy-v2-stg-auroracluster-snddpbtogcwz"
+  #     Environment: "nonprod"
+  #     ManagedBy: "Pulumi"

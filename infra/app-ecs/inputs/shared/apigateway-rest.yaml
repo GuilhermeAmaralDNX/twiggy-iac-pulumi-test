@@ -1,0 +1,18 @@
+[]
+# - name: dev-sdb-carbone-connector-webhook
+#   stages:
+#     - name: $default
+#   resources:
+#     - name: customerId
+#       path: "{customerId}"
+#       methods: []
+#     - name: reportType
+#       parent: customerId
+#       path: "{reportType}"
+#       methods: 
+#         - httpMethod: POST
+#           authorization: NONE
+#           integrationType: AWS_PROXY
+#           integrationName: reportType-POST
+#           lambdaName: dev-carbone-connector-report-message-generator
+#           uri: arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:111111111111:function:dev-carbone-connector-report-message-generator/invocations

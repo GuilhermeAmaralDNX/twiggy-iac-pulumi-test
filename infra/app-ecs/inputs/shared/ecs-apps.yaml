@@ -1,0 +1,30 @@
+appsWithALB: []
+
+appsWithouthALB: []
+#   - name: "nginx-worker"
+#     alb: "internal"
+#     desiredCount: "1"
+#     autoscalingMin: "1"
+#     autoscalingMax: "1"
+#     launchType: EC2
+#     image: "public.ecr.aws/nginx/nginx:latest"
+#     cpu: "256"
+#     memory: "256"
+#     scaleUp:
+#       enabled: "true"
+#       cpu:
+#         enabled: "true"
+#         value: "70"
+#       memory:
+#         enabled: "true"
+#         value: "70"
+#     customRole: []
+appsScheduler: []
+#   - name: update-balance
+#     cpu: "128"
+#     memory: "128" 
+#     launchType: EC2
+#     isEnabled: true
+#     image: alpine:latest
+#     scheduleExpression: 00 21 * * ? *
+#     customRole: []

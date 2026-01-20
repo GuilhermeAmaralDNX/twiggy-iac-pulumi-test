@@ -1,0 +1,29 @@
+# listS3: []
+# customKMSPermission: []
+listS3:
+  - name: "grafana-loki-298685518555"
+    acl: "private"
+    sseAlgorithm: "AES256"
+    policy: []
+    tags: {}
+
+  - name: "grafana-tempo-298685518555"
+    acl: "private"
+    sseAlgorithm: "AES256"
+    policy: []
+    tags: {}    
+
+#   - name: "dev-dgps-log-legacy"
+#     acl: "private"
+#     sseAlgorithm: "AES256"
+#     policy: []
+#     # - actions: 
+#       # - "*"
+#       # effect: Allow
+#       # principals:
+#       # - identifiers:
+#       #   - arn:aws:iam::000000000000:user/ec2deploy
+#       #   type: AWS
+#       # resources:
+#       # - 'arn:aws:s3:::xxxxxxxxxxxxxxx/*'   
+#     tags: {}

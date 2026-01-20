@@ -1,0 +1,28 @@
+config:
+  aws:region: "us-east-2"
+  pulumi:template: "aws-javascript"
+  configuration:
+    orgName:
+    pulumiOrg: twiggy-org
+    account: "shared"
+    region: us-east-2
+    type: "github"
+    name: "shared"
+    tokenpulumi: "${PULUMI_ACCESS_TOKEN}"
+    runnerType: github
+
+    profileInstance: "InfraDeployInstanceProfile"
+    githubconfig:
+      githubOrg: "Twiggy-ai"
+      githubLabels: "aws,shared,linux"
+      githubToken: "${GH_RUNNER_TOKEN}"
+    
+    bitbucketConfig:
+      account_uuid: "xxxxxxxxxxxxxxxxxxxxxxxxxx"
+      runner_uuid: "xxxxxx"
+      oauth_client_id: "xxxxxx"
+      oauth_client_secret: "xxxx"
+
+    instanceTypes:
+      - instanceType: "t3.medium"
+      - instanceType: "t3a.medium"

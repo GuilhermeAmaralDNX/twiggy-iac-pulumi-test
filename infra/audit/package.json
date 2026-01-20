@@ -1,0 +1,8 @@
+{
+    "name": "audit",
+    "main": "index.js",
+    "dependencies": {
+        "@pulumi/pulumi": "3.191.0",
+        "@pulumi/aws": "7.5.0"
+    }
+}

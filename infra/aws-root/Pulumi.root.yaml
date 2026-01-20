@@ -1,0 +1,50 @@
+config:
+  aws:region: "us-east-1"
+  aws-root:configuration:
+    region: "us-east-1"
+    orgName: "twiggy"
+    orgPulumi: "twiggy-org"
+    orgRole: "twiggyAccountAccessRole"
+    organizationRootName: "Root"
+    dnxAccount: "101439088956"
+    organizationRootExists: true
+    extraTrustRelationshipInfraDeploy:
+      - "arn:aws:iam::520827482915:user/CIDeploy"
+      - "arn:aws:iam::520827482915:role/InfraDeployEc2"
+    budgetAlertlLimitAmount: 2000
+    costAnomalyDetection:
+      enabled: true
+      emailsToNotify: []
+      thresholdPercentage: 20
+    createServiceLinkedRoles: true
+    serviceLinkedRoles:
+      - name: "ecs"
+        service: "ecs.amazonaws.com"
+      - name: "autoscale"
+        service: "autoscaling.amazonaws.com"
+      - name: "elasticbeanstalk"
+        service: elasticbeanstalk.amazonaws.com
+    isCreateAccounts: true
+    accounts: []
+    accountsCreate:
+      - name: "shared"
+        email: "aws-shared-services@twiggy.ai"
+      - name: "audit"
+        email: "aws-audit@twiggy.ai"
+      - name: "nonprod"
+        email: "aws-nonprod@twiggy.ai"
+      - name: "prod"
+        email: "aws-prod@twiggy.ai"
+    createSSO: false
+    groupsId:
+      services: "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx"
+      audit: "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx"
+      nonprod: "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx"
+      prod: "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx"
+    notification:
+      enabled: false
+      webhookTeams: ""
+      webhookGoole: ""
+      slackChannel: ""
+      slackToken: ""
+      endpointType: ""

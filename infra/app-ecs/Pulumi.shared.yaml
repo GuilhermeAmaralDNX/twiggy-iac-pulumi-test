@@ -1,0 +1,74 @@
+config:
+  app-ecs:configuration:
+    pulumiOrg: twiggy-org
+    region: "sa-east-1"
+    account: "shared"
+    accountNumber: "000000000000"
+    ecsName: "shared"
+    createECS: true
+    vpnCidr: "10.37.0.0/16"
+    useDefaultCertificate: true
+    certificate: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    additionalCertificate: []
+    isFargate: true
+    isFargateSpot: true
+    isFargateOnly: true
+    ECSVpnAccess: false
+    throughputMode: "bursting"
+    provisionedThroughputInMibps: "0"
+    albExternal: false
+    albInternal: true
+    instanceTypes:
+      - "t3.medium"
+      - "t3a.medium"
+    minSize: "1"
+    maxSize: "2"
+    onDemandBaseCapacity: "0"
+    onDemandPercentageAboveBaseCapacity: "0"
+    asgTargetCapacity: "100"
+    volumeSize: "30"
+    ecsSetting:
+      - name: "containerInsights"
+        value: "enabled"
+    scheduler:
+      enabled: "true"
+      scheduleCronStart: "0 11 * * *"
+      scheduleCronStop: "0 20 * * *"
+      asgMin: "1"
+      asgMax: "3"
+    retentionInDays: "30"
+    exportToS3: "false"
+    grafana:
+      launchType: "FARGATE"
+      enabled: true
+      name: "grafana"
+      alb: "internal"
+      image: "grafana/grafana:12.2-ubuntu"
+      cpu: "512"
+      memory: "1024"
+      paths:
+        - "/*"
+      hostnames:
+        - "grafana.shared.aws.twiggy.ai"
+      environment:
+        - name: "GF_SERVER_ROOT_URL"
+          value: "https://grafana.shared.aws.twiggy.ai"
+        - name: "GF_SERVER_DOMAIN"
+          value: "grafana.shared.aws.twiggy.ai"
+          
+      extraPermssions:
+        - effect: "Allow"
+          actions: sts:AssumeRole
+          resources:
+            - arn:aws:iam::138062249233:role/custom-role-grafana-nonprod-sa-east-1
+      # extraTrust:
+      #     Action: sts:AssumeRole 
+      #     Principal:
+      #       AWS : ............
+      #     Effect: Allow
+    efsAccessPoints: []
+    orgName: twiggy
+    stepFunctions:
+      enabled: true
+  aws:region: "sa-east-1"
+  pulumi:template: "aws-javascript"

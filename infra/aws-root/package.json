@@ -1,0 +1,9 @@
+{
+    "name": "aws-root",
+    "main": "index.js",
+    "dependencies": {
+        "@pulumi/aws": "7.5.0",
+        "@pulumi/awsguard": "0.4.0",
+        "@pulumi/pulumi": "3.78.1"
+    }
+}

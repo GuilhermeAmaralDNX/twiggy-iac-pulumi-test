@@ -1,0 +1,7 @@
+[]
+# - name: sdb-carbone-connector-report-notification
+#   subscriptions:
+#     - name: operational-application-sdb-applicationReportWorker
+#       endpoint: arn:aws:sqs:us-east-2:000000000000:operational-application-sdb-applicationReportWorker
+#       protocol: 'sqs'
+#       rawMessageDelivery: true

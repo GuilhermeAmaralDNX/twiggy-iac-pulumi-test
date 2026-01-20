@@ -1,0 +1,43 @@
+[]
+# - name: MonitorLogJobsFunction-dev
+#   runtime: 'nodejs14.x'
+#   memorySize: 128
+#   handler: 'app.monitorLogJobsHandler'
+#   location: './inputs/nonprod/lambdas/index-js.zip'
+#   timeout: 300
+#   vpcEnable: true
+#   ignoreChanges:
+#     - code
+#   triggers:
+#     EventBridgeScheduler: 
+#       - name: monitor-logjobs-event
+#         cron: "38 * * * ? *"
+#         input: ""
+#   invokers: #Adicionar esse recurso somente após criar o APIGateway
+#     - name: api-monitor
+#       action: "lambda:InvokeFunction"
+#       principal: apigateway.amazonaws.com
+#       sourceArn: arn:aws:execute-api:us-east-1:1111111111:9rzwj7247c/*/GET/monitorLogJObs
+#   customRole:
+#     - effect: "Allow"
+#       actions:
+#         - "ecs:ListServices"
+#         - "ecs:ListAttributes"
+#         - "ecs:ListTasks"
+#         - "ecs:DescribeServices"
+#         - "ecs:DescribeTaskSets"
+#         - "ecs:ListContainerInstances"
+#         - "ecs:DescribeContainerInstances"
+#         - "ecs:DescribeTasks"
+#         - "ecs:ListTaskDefinitions"
+#         - "ecs:DescribeTaskDefinition"
+#         - "ecs:DescribeClusters"
+#         - "ecs:ListClusters"
+#       resources:
+#         - "*"    
+#     - effect: "Allow"
+#       actions:
+#         - "ses:SendEmail"
+#         - "ses:SendRawEmail"
+#       resources:
+#         - "arn:aws:ses:us-east-1:022067863185:identity/*"

@@ -1,0 +1,31 @@
+config:
+  aws:region: "us-east-1"
+  baseline:configuration:
+    pulumiOrg: twiggy-org
+    account: "shared"
+    accountNumber: "000000000000"
+    region: "us-east-1"
+    CloudTrailKmsKeyId: "arn:aws:kms:xx-xxxx-x:000000000000:key/xxxxxxxxxxxxxxxxxxxxxxxxx"
+    auditAccountId: "000000000000"
+    enableSecuirtyHub: true
+    enableConfig: true
+    enableCloudtrail: true
+    enableGuardDuty: true
+    globalCloutrail: true
+    globalConfig: true
+    enableAlarms: true
+    logGroupRetention: "7"
+    cloudwatchlogsRetention: 30
+    orgName: "twiggy"
+    notification:
+      enabled: true
+      webhookTeams: ""
+      webhookGoole: ""
+      slackChannel: ""
+      slackToken: ""
+      endpointType: ""
+      logOnly: "true"
+    cloudTrailDataResources: []
+    enableBucketAccessLogs: true
+    bucketAccessLogsRentition: "7"
+    pulumi:template: "aws-javascript"

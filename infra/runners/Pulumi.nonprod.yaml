@@ -1,0 +1,28 @@
+config:
+  aws:region: "sa-east-1"
+  pulumi:template: "aws-javascript"
+  configuration:
+    orgName:
+    pulumiOrg: twiggy-org
+    account: "nonprod"
+    region: sa-east-1
+    type: "bitbucket"
+    name: "nonprod"
+    tokenpulumi: ""
+    runnerType: github
+
+    profileInstance: "InfraDeployInstanceProfile"
+    githubconfig:
+      githubOrg: "Twiggy-ai"
+      githubLabels: "aws,nonprod,linux"
+      githubToken: "......"
+    
+    bitbucketConfig:
+      account_uuid: "xxxxxxxxxxxxxxxxxxxxxxxxxx"
+      runner_uuid: "xxxxxx"
+      oauth_client_id: "xxxxxx"
+      oauth_client_secret: "xxxx"
+
+    instanceTypes:
+       - instanceType: "t3.medium"
+       - instanceType: "t3a.medium"

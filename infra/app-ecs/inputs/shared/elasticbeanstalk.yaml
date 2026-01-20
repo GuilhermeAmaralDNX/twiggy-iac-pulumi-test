@@ -1,0 +1,85 @@
+[]
+# - name: mrbeanx
+#   environment: mrbeanx
+#   tier: WebServer
+#   solutionStackName: 64bit Windows Server 2019 v2.11.8 running IIS 10.0
+#   defaultAppDirectory: 
+#   vpnAccess: true
+#   appsAccess: true
+#   instancesTypes:
+#     - t3.medium
+#     - t3a.medium
+#   ingressRules: []
+#   # egressRules: 
+#   #   - fromPort: 0
+#   #     toPort: 0
+#   #     protocol: "-1"
+#   #     cidrBlocks: ["0.0.0.0/0"]         
+#   permissions: []
+#   managedPolicies:
+#     - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+#     - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy  
+#   enableSpot: "true"  
+#   port: 80
+#   protocol: HTTP
+#   volumeSize: "50"
+#   matcherHTTPCode: 200-499
+#   healthCheckPath: /
+#   hostnames: 
+#     - mrbeanx.mrbean-nonprod.cloud.dnxbrasil.com.br
+#   paths:
+#     - /*
+#   autoscalingMinSize: "1"
+#   autoscalingMaxSize: "2"
+#   autoScaleConfig:
+#     measureName: CPUUtilization
+#     statistic: Average
+#     unit: Percent
+#     lowerThreshold: "50"  
+#     upperThreshold: "70"                     
+#   logRetention: "7"
+# - name: bobozinho
+#   environment: bobozinho
+#   tier: WebServer
+#   solutionStackName: 64bit Windows Server 2019 v2.11.8 running IIS 10.0
+#   defaultAppDirectory: 
+#   vpnAccess: true
+#   appsAccess: true
+#   instancesTypes:
+#     - t3.medium
+#     - t3a.medium
+#   ingressRules: []
+#   # egressRules: 
+#   #   - fromPort: 0
+#   #     toPort: 0
+#   #     protocol: "-1"
+#   #     cidrBlocks: ["0.0.0.0/0"]         
+#   permissions: []
+#   managedPolicies:
+#     - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+#     - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy  
+#   enableSpot: "true"  
+#   port: 80
+#   protocol: HTTP
+#   volumeSize: "50"
+#   matcherHTTPCode: 200-499
+#   healthCheckPath: /
+#   hostnames: 
+#     - mrbeanx.mrbean-nonprod.cloud.dnxbrasil.com.br
+#   paths:
+#     - /*
+#   autoscalingMinSize: "1"
+#   autoscalingMaxSize: "2"
+#   autoScaleConfig:
+#     measureName: CPUUtilization
+#     statistic: Average
+#     unit: Percent
+#     lowerThreshold: "50"  
+#     upperThreshold: "70"                     
+#   logRetention: "7"
+
+
+
+
+
+

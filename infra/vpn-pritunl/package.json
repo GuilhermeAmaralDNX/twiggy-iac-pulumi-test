@@ -1,0 +1,9 @@
+{
+    "dependencies": {
+      "@pulumi/awsx": "3.0.0",
+      "@pulumi/pulumi": "3.191.0",
+      "@pulumi/aws": "7.5.0",
+      "@pulumi/tls": "5.2.1"
+    }
+  }
+  

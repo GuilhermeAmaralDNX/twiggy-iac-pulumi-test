@@ -1,0 +1,30 @@
+[]
+  # - name: web-v2
+  #   domain: "web-v2.dev.xxxxx.com.br"
+  #   branchAutoBuild: true
+  #   platform: WEB
+  #   framework: "Web"
+  #   certificateConfig:
+  #     type: "CUSTOM"
+  #     customCertificateArn: "arn:aws:acm:us-east-1:xxxxxx:certificate/xxxxxx-xxx-xxxx-xxx-xxxxxxx"
+  #   repository: https://github.com/xxx/web-v2
+  #   branchName: "dnx"
+  #   buildSpec:
+  #     preBuildCmd: 
+  #       - yarn install --force
+  #     buildCmd: 
+  #       - yarn run build
+  #     baseDirectory: build
+  #     artifactFiles: 
+  #       - "**/*"
+  #     cachePaths: 
+  #       - node_modules/**/*
+  #   customRules:
+  #     - source: '/<*>'
+  #       status: '404'
+  #       target: '/index.html'
+  #   accessToken: "xxxx"
+  #   appVariables: []
+  #     # _CUSTOM_IMAGE: amplify:al2023
+  #   branchVariables: []
+  #     # KEY: value

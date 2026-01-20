@@ -1,0 +1,22 @@
+name: Plan IaC
+on:
+  push:
+    branches:
+      - 'master'
+jobs:
+  preview-shared:
+    runs-on: shared
+    environment: 
+      name: shared
+    steps:          
+      - name: Preview Shared
+        run: |
+          export PULUMI_ACCESS_TOKEN=${{ secrets.PULUMI_ACCESS_TOKEN }}
+          output=$(aws sts assume-role --role-arn "arn:aws:iam::710792170386:role/InfraDeployAccess" --role-session-name SessionInfraDeployAccess)
+          export AWS_ACCESS_KEY_ID=$(echo $output | jq -r '.Credentials''.AccessKeyId')
+          export AWS_SECRET_ACCESS_KEY=$(echo $output | jq -r '.Credentials''.SecretAccessKey')
+          export AWS_SESSION_TOKEN=$(echo $output | jq -r '.Credentials''.SessionToken')          
+          pulumi stack select shared
+          pulumi preview
+
+ 

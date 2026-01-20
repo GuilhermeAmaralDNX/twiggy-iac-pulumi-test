@@ -1,0 +1,49 @@
+[]
+#- name: hello-nlb
+#  loadBalancerType: "network"
+#  sgIngressEgress: []
+#  internal: false
+#  subnetType: public
+#  enableDeletionProtection: false
+#  targets: 
+#    - name: hello-nlb-3306
+#      port: 3306
+#      protocol: "TCP"
+#      forward: 
+#        targetType: instance      
+#        targetPort: 3306
+#        targetId: "i-04e8548e012c4edb6"
+#        targetProtocol: "TCP"
+#- name: hello-alb
+#  loadBalancerType: "application"
+#  sgIngressEgress: []
+#  internal: false
+#  subnetType: public
+#  enableDeletionProtection: false
+#  targets: 
+#    - name: "https-forward"
+#      port: 443
+#      protocol: "HTTPS"
+#      certificateArn: "arn:aws:acm:us-east-2:111111111111:certificate/6600eb36-8df2-46a3-a4fe-7ed1fc21202f"
+#      forward: 
+#        targetPort: 80
+#        targetProtocol: "HTTP"
+#        listenerRules: 
+#          - name: "hello-web"
+#            targetId: "i-04e8548e012c4edb6"          
+#            targetPort: 443
+#            targetType: instance
+#            healthCheckMatcher: "200"
+#            healthCheckProtocol: "HTTPS"
+#            rulePath: 
+#              - "/*"
+#            ruleHostnames: 
+#              - "hello.mrbean-nonprod.cloud.dnxbrasil.com.br"
+#            externalHostnames: []
+#    - name: "http-redirect"
+#      port: 80
+#      protocol: "HTTP"
+#      redirect: 
+#        port: "443"
+#        protocol: "HTTPS"
+#        statusCode: "HTTP_301"    

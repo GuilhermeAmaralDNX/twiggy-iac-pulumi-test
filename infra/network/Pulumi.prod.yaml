@@ -1,0 +1,29 @@
+config:
+  aws:region: "us-east-1"
+  network:configuration:
+    orgName: "twiggy"
+    pulumiOrg: twiggy-org
+    region: "us-east-1"
+    account: "prod"
+    accountNumber: "000000000000"
+    cidrBlock: "10.57.0.0/16"
+    enableFlowLogs: false
+    flowLogsRetention: 30
+    maxAz: 3
+    createNatGateway: true
+    enableMultiNat: false
+    instanceTypesNat:
+      - t3.micro
+      - t3a.micro
+    PublicNaclInboundTCPPorts:
+      - "80"
+      - "443"
+      - "1194"
+    PublicNaclInboundUDPPorts: []
+    PrivateNaclInbound: []
+    publicZones:
+      - "prod.twiggy.ai"
+    privateZones: []
+    eksClusters:
+      - "prod-apps"
+  pulumi:template: "aws-javascript"

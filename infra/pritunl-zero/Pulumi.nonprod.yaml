@@ -1,0 +1,53 @@
+config:
+  aws:region: sa-east-1
+  pritunl-zero:configuration:
+    pulumiOrg: twiggy-org
+    region: sa-east-1
+    domainName: "xxxxxxxxxxxxxxxxxx"
+    account: "nonprod"
+    accountNumber: "000000000000"
+    useDefaultCertificate: true
+    useDefaultDomain: true
+    certificateARN: "xxxxxxxxxxxxxxxxx"
+    instanceConfig:
+      #ami: ami-024e6efaf93d85776
+      ingressRules: 
+        - name: web
+          fromPort: 443
+          toPort: 443
+          protocol: "tcp"
+          cidrBlocks: ['0.0.0.0/0']
+        - name: http
+          fromPort: 80
+          toPort: 80
+          protocol: "tcp"
+          cidrBlocks: ['0.0.0.0/0']
+      cloudInitFile:
+        enable: true
+        name: linux.tpl
+      instanceType: t3a.small
+      keyPar: false
+      managedPolicies:
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+        - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+      monitoring: "true"
+      name: pritunl-zero
+      tags:
+        Backup: true
+        Group: vpn
+        Name: pritunl-zero
+        OS: linux
+        account: "nonprod"
+        environment: "dev"
+      volumeSize: "30"
+      volumeType: gp3
+    loadBalance:
+      name: pritunl-zero
+      loadBalancerType: network
+      enableCrossZoneLoadBalancing: true
+      internetAccess: true
+      env: nonprod
+      ingressRules: []
+      targets: []
+    orgName: twiggy
+  pulumi:template: aws-javascript

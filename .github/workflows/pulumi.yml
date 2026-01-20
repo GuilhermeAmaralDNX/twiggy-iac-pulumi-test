@@ -1,0 +1,153 @@
+# GitHub Actions Pipeline for Pulumi Infrastructure
+# Trigger: Manual via GitHub UI (workflow_dispatch)
+
+name: Pulumi Infrastructure
+
+on:
+  workflow_dispatch:
+    inputs:
+      module:
+        description: 'Pulumi module to deploy'
+        required: true
+        type: choice
+        options:
+          - aws-root
+          - network
+          - identity
+          - utilities
+          - audit
+          - baseline
+          - vpn-pritunl
+          - app-ecs
+          - runners
+          - runner-gitlab
+          - pritunl-zero
+
+      environment:
+        description: 'Target environment/account'
+        required: true
+        type: choice
+        options:
+          - nonprod
+          - prod
+          - audit
+          - services
+          - root
+
+      command:
+        description: 'Pulumi command'
+        required: true
+        type: choice
+        options:
+          - preview
+          - up
+
+env:
+  # AWS Account IDs - Twiggy
+  ACCOUNT_ROOT: "440041991649"
+  ACCOUNT_PROD: "052433811639"
+  ACCOUNT_NONPROD: "632185211638"
+  ACCOUNT_AUDIT: "116099575322"
+  ACCOUNT_SERVICES: "520827482915"
+
+  # Pulumi
+  PULUMI_ORG: "twiggy-org"
+  AWS_REGION: "us-east-1"
+
+jobs:
+  pulumi:
+    name: "Pulumi ${{ inputs.command }} - ${{ inputs.module }} (${{ inputs.environment }})"
+    runs-on: [self-hosted, linux, aws, shared]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set AWS Account ID and Stack Name
+        id: config
+        run: |
+          # Set Account ID based on environment
+          case "${{ inputs.environment }}" in
+            prod)
+              echo "ACCOUNT_ID=${{ env.ACCOUNT_PROD }}" >> $GITHUB_ENV
+              ;;
+            nonprod)
+              echo "ACCOUNT_ID=${{ env.ACCOUNT_NONPROD }}" >> $GITHUB_ENV
+              ;;
+            audit)
+              echo "ACCOUNT_ID=${{ env.ACCOUNT_AUDIT }}" >> $GITHUB_ENV
+              ;;
+            services|shared)
+              echo "ACCOUNT_ID=${{ env.ACCOUNT_SERVICES }}" >> $GITHUB_ENV
+              ;;
+            root)
+              echo "ACCOUNT_ID=${{ env.ACCOUNT_ROOT }}" >> $GITHUB_ENV
+              ;;
+          esac
+
+          # Set Stack Name based on module
+          case "${{ inputs.module }}" in
+            aws-root)
+              echo "STACK_NAME=root" >> $GITHUB_ENV
+              ;;
+            audit)
+              echo "STACK_NAME=audit" >> $GITHUB_ENV
+              ;;
+            *)
+              echo "STACK_NAME=${{ inputs.environment }}" >> $GITHUB_ENV
+              ;;
+          esac
+
+      - name: Assume Role via Instance Profile
+        id: assume-role
+        run: |
+          echo "Assuming role InfraDeployAccess in account ${{ env.ACCOUNT_ID }}"
+
+          CREDENTIALS=$(aws sts assume-role \
+            --role-arn "arn:aws:iam::${{ env.ACCOUNT_ID }}:role/InfraDeployAccess" \
+            --role-session-name "github-pulumi-${{ github.run_id }}" \
+            --duration-seconds 3600 \
+            --output json)
+
+          echo "AWS_ACCESS_KEY_ID=$(echo $CREDENTIALS | jq -r '.Credentials.AccessKeyId')" >> $GITHUB_ENV
+          echo "AWS_SECRET_ACCESS_KEY=$(echo $CREDENTIALS | jq -r '.Credentials.SecretAccessKey')" >> $GITHUB_ENV
+          echo "AWS_SESSION_TOKEN=$(echo $CREDENTIALS | jq -r '.Credentials.SessionToken')" >> $GITHUB_ENV
+
+      - name: Verify AWS Identity
+        run: aws sts get-caller-identity
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        working-directory: infra/${{ inputs.module }}
+        run: npm install
+
+      - name: Pulumi Login
+        run: pulumi login
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+      - name: Select Pulumi Stack
+        working-directory: infra/${{ inputs.module }}
+        run: |
+          echo "Selecting stack: ${{ env.PULUMI_ORG }}/${{ inputs.module }}/${{ env.STACK_NAME }}"
+          pulumi stack select ${{ env.PULUMI_ORG }}/${{ inputs.module }}/${{ env.STACK_NAME }}
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+      - name: Pulumi Preview
+        if: inputs.command == 'preview'
+        working-directory: infra/${{ inputs.module }}
+        run: pulumi preview --diff
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+      - name: Pulumi Up
+        if: inputs.command == 'up'
+        working-directory: infra/${{ inputs.module }}
+        run: pulumi up --yes
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}

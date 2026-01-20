@@ -1,0 +1,43 @@
+config:
+  aws:region: "us-east-1"
+  pulumi:template: "aws-javascript"
+  audit:configuration:
+    enableBucketLogging: true
+    pulumiOrg: twiggy-org
+    account: audit
+    accountNumber: "00000000000"
+    region: "us-east-1"
+    orgName: "twiggy"
+    trusType: "saml"
+    iamPrincipalARN: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    samlProviderARN: "arn:aws:iam::000000000000:saml-provider/mrbean-sso"
+    transitionGlacierDays: "90"
+    isSlacklNotification: "true"
+    emailNotification: "mrbean@example.com"
+    enableGuardDuty: "true"
+    enablePCI: "true"
+    enableCIS: "true"
+    enableFoundational: "true"
+    enableSecurityHub: "true"
+    cloudwatchlogsRetention: 30
+    severityList:
+      - "CRITICAL"
+      - "HIGH"
+    accounts:
+      - env: "services"
+        id: "00000000000"
+        email: ""
+      - env: "nonprod"
+        id: "00000000000"
+        email: ""
+      - env: "prod"
+        id: "00000000000"
+        email: ""
+    notification:
+      enabled: false
+      webhookTeams: ""
+      webhookGoole: ""
+      slackChannel: ""
+      slackToken: ""
+      endpointType: ""
+      logOnly: "true"

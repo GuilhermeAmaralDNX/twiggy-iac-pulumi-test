@@ -1,0 +1,332 @@
+appsWithALB:
+  # Twiggy API - Main REST API
+  - name: "twiggy-api"
+    alb: "external"
+    desiredCount: "1"
+    autoscalingMin: "1"
+    autoscalingMax: "3"
+    launchType: EC2
+    image: "520827482915.dkr.ecr.us-east-1.amazonaws.com/twiggy-api:latest"
+    cpu: "256"
+    memory: "512"
+    scaleUp:
+      enabled: "true"
+      cpu:
+        enabled: "true"
+        value: "70"
+      memory:
+        enabled: "true"
+        value: "70"
+    port: 8080
+    paths:
+     - /*
+    protocol: HTTP
+    healthcheckPath: /status
+    healthcheckMatcher: 200-299
+    hostnames:
+      - "twiggy-api.dev.twiggy.ai"
+    customRole:
+    - effect: Allow
+      actions:
+        - "secretsmanager:GetResourcePolicy"
+        - "secretsmanager:GetSecretValue"
+        - "secretsmanager:DescribeSecret"
+        - "secretsmanager:ListSecretVersionIds"
+      resources:
+        - "arn:aws:secretsmanager:us-east-1:632185211638:secret:/app/ecs/twiggy-api-*"
+    - effect: Allow
+      actions:
+        - "s3:GetObject"
+        - "s3:PutObject"
+        - "s3:DeleteObject"
+        - "s3:ListBucket"
+      resources:
+        - "arn:aws:s3:::twiggy-*"
+        - "arn:aws:s3:::twiggy-*/*"
+
+  # Twiggy Shopify - Shopify Integration
+  - name: "twiggy-shopify"
+    alb: "external"
+    desiredCount: "1"
+    autoscalingMin: "1"
+    autoscalingMax: "2"
+    launchType: EC2
+    image: "520827482915.dkr.ecr.us-east-1.amazonaws.com/twiggy-shopify:latest"
+    cpu: "256"
+    memory: "512"
+    scaleUp:
+      enabled: "true"
+      cpu:
+        enabled: "true"
+        value: "70"
+      memory:
+        enabled: "true"
+        value: "70"
+    port: 8080
+    paths:
+     - /*
+    protocol: HTTP
+    healthcheckPath: /status
+    healthcheckMatcher: 200-299
+    hostnames:
+      - "twiggy-shopify.dev.twiggy.ai"
+    customRole:
+    - effect: Allow
+      actions:
+        - "secretsmanager:GetResourcePolicy"
+        - "secretsmanager:GetSecretValue"
+        - "secretsmanager:DescribeSecret"
+        - "secretsmanager:ListSecretVersionIds"
+      resources:
+        - "arn:aws:secretsmanager:us-east-1:632185211638:secret:/app/ecs/twiggy-shopify-*"
+    - effect: Allow
+      actions:
+        - "s3:GetObject"
+        - "s3:PutObject"
+        - "s3:DeleteObject"
+        - "s3:ListBucket"
+      resources:
+        - "arn:aws:s3:::twiggy-*"
+        - "arn:aws:s3:::twiggy-*/*"
+
+  # Temporal Server - Workflow orchestration engine (gRPC)
+  # Nota: Health checks falham porque gRPC não responde a HTTP, mas o serviço funciona corretamente
+  # Worker se conecta diretamente via IP interno do container
+  - name: "temporal"
+    alb: "internal"
+    desiredCount: "1"
+    autoscalingMin: "1"
+    autoscalingMax: "1"
+    launchType: EC2
+    image: "temporalio/auto-setup:1.25.0"
+    cpu: "512"
+    memory: "1024"
+    scaleUp:
+      enabled: "false"
+      cpu:
+        enabled: "false"
+        value: "70"
+      memory:
+        enabled: "false"
+        value: "70"
+    port: 7233
+    paths:
+     - /*
+    protocol: HTTP
+    healthcheckPath: /
+    healthcheckMatcher: 200-499
+    hostnames:
+      - "temporal.dev.twiggy.ai"
+    environment:
+      - name: "DB"
+        value: "postgres12"
+      - name: "DB_PORT"
+        value: "5432"
+      - name: "POSTGRES_HOST"
+        value: "twiggy-stg-cluster.cluster-c8tucykk8dl5.us-east-1.rds.amazonaws.com"
+      - name: "POSTGRES_USER"
+        value: "twiggy_admin"
+      - name: "POSTGRES_PWD"
+        value: "6nPwkE9z4vwa"
+      - name: "POSTGRES_SEEDS"
+        value: "twiggy-stg-cluster.cluster-c8tucykk8dl5.us-east-1.rds.amazonaws.com"
+      - name: "DBNAME"
+        value: "temporal"
+      - name: "VISIBILITY_DBNAME"
+        value: "temporal_visibility"
+    customRole:
+    - effect: Allow
+      actions:
+        - "secretsmanager:GetResourcePolicy"
+        - "secretsmanager:GetSecretValue"
+        - "secretsmanager:DescribeSecret"
+        - "secretsmanager:ListSecretVersionIds"
+      resources:
+        - "arn:aws:secretsmanager:us-east-1:632185211638:secret:/app/ecs/temporal-*"
+
+  # Temporal Web UI - Admin interface for Temporal
+  - name: "temporal-ui"
+    alb: "internal"
+    desiredCount: "1"
+    autoscalingMin: "1"
+    autoscalingMax: "1"
+    launchType: EC2
+    image: "temporalio/ui:2.31.2"
+    cpu: "256"
+    memory: "512"
+    scaleUp:
+      enabled: "false"
+      cpu:
+        enabled: "false"
+        value: "70"
+      memory:
+        enabled: "false"
+        value: "70"
+    port: 8080
+    paths:
+     - /*
+    protocol: HTTP
+    healthcheckPath: /
+    healthcheckMatcher: 200-299
+    hostnames:
+      - "temporal-ui.dev.twiggy.ai"
+    environment:
+      - name: "TEMPORAL_ADDRESS"
+        value: "temporal.dev.twiggy.ai:7233"
+      - name: "TEMPORAL_CORS_ORIGINS"
+        value: "http://localhost:3000"
+    customRole:
+    - effect: Allow
+      actions:
+        - "secretsmanager:GetResourcePolicy"
+        - "secretsmanager:GetSecretValue"
+        - "secretsmanager:DescribeSecret"
+        - "secretsmanager:ListSecretVersionIds"
+      resources:
+        - "arn:aws:secretsmanager:us-east-1:632185211638:secret:/app/ecs/temporal-ui-*"
+
+appsWithouthALB:
+  # Twiggy Worker - Temporal Worker (no ALB needed)
+  - name: "twiggy-worker"
+    desiredCount: "1"
+    autoscalingMin: "1"
+    autoscalingMax: "3"
+    launchType: EC2
+    image: "520827482915.dkr.ecr.us-east-1.amazonaws.com/twiggy-worker:latest"
+    cpu: "256"
+    memory: "512"
+    scaleUp:
+      enabled: "true"
+      cpu:
+        enabled: "true"
+        value: "70"
+      memory:
+        enabled: "true"
+        value: "70"
+    port: 8080
+    customRole:
+    - effect: Allow
+      actions:
+        - "secretsmanager:GetResourcePolicy"
+        - "secretsmanager:GetSecretValue"
+        - "secretsmanager:DescribeSecret"
+        - "secretsmanager:ListSecretVersionIds"
+      resources:
+        - "arn:aws:secretsmanager:us-east-1:632185211638:secret:/app/ecs/twiggy-worker-*"
+    - effect: Allow
+      actions:
+        - "s3:GetObject"
+        - "s3:PutObject"
+        - "s3:DeleteObject"
+        - "s3:ListBucket"
+      resources:
+        - "arn:aws:s3:::twiggy-*"
+        - "arn:aws:s3:::twiggy-*/*"
+    - effect: Allow
+      actions:
+        - "sqs:SendMessage"
+        - "sqs:ReceiveMessage"
+        - "sqs:DeleteMessage"
+        - "sqs:GetQueueAttributes"
+      resources:
+        - "arn:aws:sqs:us-east-1:632185211638:twiggy-*"
+
+  # Twiggy YOLO - ML Object Detection API (GPU required)
+  - name: "twiggy-yolo"
+    desiredCount: "1"
+    autoscalingMin: "1"
+    autoscalingMax: "1"
+    launchType: EC2
+    capacityProvider: GPU
+    gpuCount: "1"
+    image: "520827482915.dkr.ecr.us-east-1.amazonaws.com/twiggy-yolo:latest"
+    cpu: "2048"
+    memory: "8192"
+    environment:
+      - name: "GPU_ENABLED"
+        value: "true"
+    scaleUp:
+      enabled: "false"
+      cpu:
+        enabled: "false"
+        value: "70"
+      memory:
+        enabled: "false"
+        value: "70"
+    port: 8080
+    customRole:
+    - effect: Allow
+      actions:
+        - "secretsmanager:GetResourcePolicy"
+        - "secretsmanager:GetSecretValue"
+        - "secretsmanager:DescribeSecret"
+        - "secretsmanager:ListSecretVersionIds"
+      resources:
+        - "arn:aws:secretsmanager:us-east-1:632185211638:secret:/app/ecs/twiggy-yolo-*"
+    - effect: Allow
+      actions:
+        - "s3:GetObject"
+        - "s3:PutObject"
+        - "s3:DeleteObject"
+        - "s3:ListBucket"
+      resources:
+        - "arn:aws:s3:::twiggy-*"
+        - "arn:aws:s3:::twiggy-*/*"
+
+  # Twiggy Extract - ML Feature Extraction API (GPU required)
+  - name: "twiggy-extract"
+    desiredCount: "1"
+    autoscalingMin: "1"
+    autoscalingMax: "1"
+    launchType: EC2
+    capacityProvider: GPU
+    gpuCount: "1"
+    image: "520827482915.dkr.ecr.us-east-1.amazonaws.com/twiggy-extract:latest"
+    cpu: "2048"
+    memory: "8192"
+    environment:
+      - name: "GPU_ENABLED"
+        value: "true"
+    scaleUp:
+      enabled: "false"
+      cpu:
+        enabled: "false"
+        value: "70"
+      memory:
+        enabled: "false"
+        value: "70"
+    port: 8080
+    customRole:
+    - effect: Allow
+      actions:
+        - "secretsmanager:GetResourcePolicy"
+        - "secretsmanager:GetSecretValue"
+        - "secretsmanager:DescribeSecret"
+        - "secretsmanager:ListSecretVersionIds"
+      resources:
+        - "arn:aws:secretsmanager:us-east-1:632185211638:secret:/app/ecs/twiggy-extract-*"
+    - effect: Allow
+      actions:
+        - "s3:GetObject"
+        - "s3:PutObject"
+        - "s3:DeleteObject"
+        - "s3:ListBucket"
+      resources:
+        - "arn:aws:s3:::twiggy-*"
+        - "arn:aws:s3:::twiggy-*/*"
+
+appsScheduler: []
+# Exemplo de scheduled task (se necessário no futuro)
+# - name: update-balance
+#   cpu: "256"
+#   memory: "512"
+#   launchType: FARGATE
+#   isEnabled: true
+#   image: 632185211638.dkr.ecr.us-east-1.amazonaws.com/twiggy-scheduler:latest
+#   scheduleExpression: cron(0 21 * * ? *)
+#   customRole:
+#   - effect: Allow
+#     actions:
+#       - "secretsmanager:GetSecretValue"
+#     resources:
+#       - "arn:aws:secretsmanager:us-east-1:632185211638:secret:/app/ecs/twiggy-scheduler-*"

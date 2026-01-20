@@ -1,0 +1,10 @@
+[]
+# customDomains:
+#   - domainName: "api.dev.xxx.com.br"
+#     certificateArn: "arn:aws:acm:us-east-2:1111111111:certificate/xxxxxxxxxxxxxxxxxx"
+#     apiMappings:
+#       - restApiId: "utrwwc4zt5"
+#         stage: "$default"
+#       - restApiId: "dacsgsk8mh"
+#         stage: "$default"
+#         apiMappingKey: "v1/post-flight"

@@ -1,0 +1,22 @@
+[]
+# - tableName: agricultural-defensive-product-types-dev
+#   billingMode: PAY_PER_REQUEST
+#   readCapacity: 0
+#   writeCapacity: 0
+#   readScaling: false
+#   writeScaling: false
+#   autoScaling:
+#     read:
+#       maxCapacity: null
+#       minCapacity: null
+#       targetUtilization: null
+#     write:
+#       maxCapacity: null
+#       minCapacity: null
+#       targetUtilization: null
+#   attributes:
+#   - name: id
+#     type: S
+#   partitionKey:
+#     name: id
+#   sortKey: null

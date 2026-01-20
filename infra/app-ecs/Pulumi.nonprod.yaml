@@ -1,0 +1,73 @@
+config:
+  app-ecs:configuration:
+    pulumiOrg: twiggy-org
+    region: "us-east-1"
+    account: "nonprod"
+    accountNumber: "000000000000"
+    ecsName: "dev"
+    createECS: true
+    vpnCidr: "10.47.0.0/16"
+    useDefaultCertificate: true
+    certificate: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    additionalCertificate: []
+    isFargate: true
+    isFargateSpot: true
+    isFargateOnly: false
+    ECSVpnAccess: true
+    throughputMode: "bursting"
+    provisionedThroughputInMibps: "0"
+    albExternal: true
+    albInternal: true
+    instanceTypes:
+      - "t3.medium"
+      - "t3a.medium"
+    minSize: "1"
+    maxSize: "2"
+    onDemandBaseCapacity: "2"
+    onDemandPercentageAboveBaseCapacity: "100"
+    asgTargetCapacity: "100"
+    volumeSize: "30"
+    ecsSetting:
+      - name: "containerInsights"
+        value: "enabled"
+    scheduler:
+      enabled: "true"
+      scheduleCronStart: "0 11 * * *"
+      scheduleCronStop: "0 20 * * *"
+      asgMin: "1"
+      asgMax: "3"
+    gpuCapacityProvider:
+      enabled: true
+      instanceTypes:
+        - "g4dn.xlarge"
+      minSize: "0"
+      maxSize: "2"
+      onDemandBaseCapacity: "1"
+      onDemandPercentageAboveBaseCapacity: "100"
+      asgTargetCapacity: "100"
+      volumeSize: "100"
+    retentionInDays: "30"
+    exportToS3: "false"
+    grafana:
+      launchType: "FARGATE"
+      enabled: true
+      name: "grafana"
+      alb: "internal"
+      image: "grafana/grafana:12.2-ubuntu"
+      cpu: "512"
+      memory: "1024"
+      paths:
+        - "/*"
+      hostnames:
+        - "grafana.dev.twiggy.ai"
+      # extraTrust:
+      #   Action: sts:AssumeRole
+      #   Principal:
+      #     AWS: arn:aws:iam::298685518555:role/custom-role-grafana-shared-sa-east-1
+      #   Effect: Allow
+    efsAccessPoints: []
+    orgName: twiggy
+    stepFunctions:
+      enabled: true
+  aws:region: "us-east-1"
+  pulumi:template: "aws-javascript"

@@ -1,0 +1,38 @@
+instance: []
+cluster: []
+# instance:
+#   - name: "db-pf-mysql-56"
+#     snapshotId: "arn:aws:rds:us-east-2:1111111111:snapshot:snap-db-pf-mysql-ohio-01"
+#     vpnAccess: true
+#     appsAccess: true
+#     ignoreChanges: []
+#     ingressRules: []
+#       # - fromPort: 3306
+#       #   toPort: 3306
+#       #   protocol: "tcp"
+#       #   sourceSecurityGroupId: "sg-000000000000"
+#     instanceClass: "db.t3.large"
+#     allocatedStorage: 30
+#     maxAllocatedStorage: 100
+#     allowMajorVersionUpgrade: true
+#     applyImmediately: true
+#     autoMinorVersionUpgrade: true
+#     availabilityZone: "us-east-2a"
+#     backupRetentionPeriod: 3
+#     backupWindow: "01:00-02:00"
+#     engine: "mysql"
+#     engineVersion: "5.7.44"
+#     username: admin
+#     multiAz: false
+#     storageType: "gp2"
+#     publiclyAccessible: false
+#     skipFinalSnapshot: true
+#     storageEncrypted: true
+#     backup: true
+#     customParameter:
+#       enabled: true 
+#       family: mysql5.7
+#       parameters:
+#         - name: binlog_format
+#           value: "ROW"  
+#           apply_method: pending-reboot  

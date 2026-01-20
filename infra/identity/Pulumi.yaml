@@ -1,0 +1,3 @@
+name: identity
+runtime: nodejs
+description: A minimal AWS JavaScript Pulumi program

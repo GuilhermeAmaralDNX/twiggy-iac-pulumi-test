@@ -1,0 +1,13 @@
+[]
+
+# securityGroups:
+#   - name: "sdb-sg-lambda-operational-application"
+#     ingressRules: []
+#       # - fromPort: 0
+#       #   toPort: 0
+#       #   protocol: "-1"
+#       #   sourceSecurityGroupId: "sg-046c1e1ed06f37b0f"
+#       # - fromPort: 443
+#       #   toPort: 443
+#       #   protocol: "tcp"
+#       #   sourceSecurityGroupId: "sg-046c1e1ed06f37b0f"

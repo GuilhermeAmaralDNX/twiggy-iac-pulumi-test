@@ -1,0 +1,64 @@
+name: Apply IaC
+on: 
+  workflow_dispatch:
+    inputs:
+      enviromemnt:
+        description: "Enviromemnt Name" 
+        required: true  
+jobs:
+  apply-nonprod:
+    runs-on: shared
+    environment: 
+      name: develop
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3.6.0
+        with:
+          ref:  master    
+      - name: Init
+        run: |
+          npm install
+      - name: Apply Nonprod
+        if: github.event.inputs.enviromemnt == 'nonprod'
+        run: |
+          export PULUMI_ACCESS_TOKEN=${{ secrets.PULUMI_ACCESS_TOKEN }}
+          output=$(aws sts assume-role --role-arn "arn:aws:iam::150216141908:role/InfraDeployAccess" --role-session-name SessionInfraDeployAccess)
+          export AWS_ACCESS_KEY_ID=$(echo $output | jq -r '.Credentials''.AccessKeyId')
+          export AWS_SECRET_ACCESS_KEY=$(echo $output | jq -r '.Credentials''.SecretAccessKey')
+          export AWS_SESSION_TOKEN=$(echo $output | jq -r '.Credentials''.SessionToken')  
+          pulumi stack select nonprod
+          pulumi up -y
+
+
+  apply-shared:
+    runs-on: shared
+    environment: 
+      name: shared
+    steps:          
+      - name: Apply Shared
+        if: github.event.inputs.enviromemnt == 'shared'
+        run: |
+          export PULUMI_ACCESS_TOKEN=${{ secrets.PULUMI_ACCESS_TOKEN }}
+          output=$(aws sts assume-role --role-arn "arn:aws:iam::589272425601:role/InfraDeployAccess" --role-session-name SessionInfraDeployAccess)
+          export AWS_ACCESS_KEY_ID=$(echo $output | jq -r '.Credentials''.AccessKeyId')
+          export AWS_SECRET_ACCESS_KEY=$(echo $output | jq -r '.Credentials''.SecretAccessKey')
+          export AWS_SESSION_TOKEN=$(echo $output | jq -r '.Credentials''.SessionToken')          
+          pulumi stack select shared
+          pulumi up -y
+
+
+  apply-prod:
+    runs-on: shared
+    environment: 
+      name: production
+    steps:          
+      - name: Apply Prod
+        if: github.event.inputs.enviromemnt == 'prod'
+        run: |
+          export PULUMI_ACCESS_TOKEN=${{ secrets.PULUMI_ACCESS_TOKEN }}
+          output=$(aws sts assume-role --role-arn "arn:aws:iam::710792170386:role/InfraDeployAccess" --role-session-name SessionInfraDeployAccess)
+          export AWS_ACCESS_KEY_ID=$(echo $output | jq -r '.Credentials''.AccessKeyId')
+          export AWS_SECRET_ACCESS_KEY=$(echo $output | jq -r '.Credentials''.SecretAccessKey')
+          export AWS_SESSION_TOKEN=$(echo $output | jq -r '.Credentials''.SessionToken')          
+          pulumi stack select prod
+          pulumi up -y
