@@ -98,16 +98,8 @@ jobs:
               ;;
           esac
 
-          # Set Role Name based on environment
-          # Root account uses DNXAccess, other accounts use InfraDeployAccess
-          case "${{ inputs.environment }}" in
-            root)
-              echo "ROLE_NAME=DNXAccess" >> $GITHUB_ENV
-              ;;
-            *)
-              echo "ROLE_NAME=InfraDeployAccess" >> $GITHUB_ENV
-              ;;
-          esac
+          # Set Role Name - CIDeployAccess for all accounts
+          echo "ROLE_NAME=CIDeployAccess" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
