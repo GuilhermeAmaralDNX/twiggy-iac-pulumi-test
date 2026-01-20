@@ -98,8 +98,8 @@ jobs:
               ;;
           esac
 
-          # Set Role Name - CIDeployAccess for all accounts
-          echo "ROLE_NAME=CIDeployAccess" >> $GITHUB_ENV
+          # Set Role Name - InfraDeployAccess for infrastructure deployment
+          echo "ROLE_NAME=InfraDeployAccess" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
