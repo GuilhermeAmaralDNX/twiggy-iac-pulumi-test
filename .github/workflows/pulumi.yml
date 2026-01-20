@@ -57,7 +57,7 @@ env:
 jobs:
   pulumi:
     name: "Pulumi ${{ inputs.command }} - ${{ inputs.module }} (${{ inputs.environment }})"
-    runs-on: [self-hosted, linux, aws, shared]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -98,20 +98,21 @@ jobs:
               ;;
           esac
 
-      - name: Assume Role via Instance Profile
-        id: assume-role
-        run: |
-          echo "Assuming role InfraDeployAccess in account ${{ env.ACCOUNT_ID }}"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
-          CREDENTIALS=$(aws sts assume-role \
-            --role-arn "arn:aws:iam::${{ env.ACCOUNT_ID }}:role/InfraDeployAccess" \
-            --role-session-name "github-pulumi-${{ github.run_id }}" \
-            --duration-seconds 3600 \
-            --output json)
-
-          echo "AWS_ACCESS_KEY_ID=$(echo $CREDENTIALS | jq -r '.Credentials.AccessKeyId')" >> $GITHUB_ENV
-          echo "AWS_SECRET_ACCESS_KEY=$(echo $CREDENTIALS | jq -r '.Credentials.SecretAccessKey')" >> $GITHUB_ENV
-          echo "AWS_SESSION_TOKEN=$(echo $CREDENTIALS | jq -r '.Credentials.SessionToken')" >> $GITHUB_ENV
+      - name: Assume Role in Target Account
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: arn:aws:iam::${{ env.ACCOUNT_ID }}:role/InfraDeployAccess
+          role-duration-seconds: 3600
 
       - name: Verify AWS Identity
         run: aws sts get-caller-identity
